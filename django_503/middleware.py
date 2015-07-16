@@ -17,7 +17,7 @@ class MaintenanceMiddleware:
         if maintenance.is_enabled() and request.user.is_staff and self.is_html_response(response):
             template = get_template('admin_warning.html')
             warning_message = template.render(Context())
-            response.content = re.sub(ur'<body.*>', u'\g<0>' + warning_message, response.content)
+            response.content = re.sub(ur'<body.*>', u'\g<0>' + warning_message, unicode(response.content, "utf-8"))
         return response
 
     def is_html_response(self, response):
